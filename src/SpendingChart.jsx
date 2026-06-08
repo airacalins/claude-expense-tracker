@@ -43,13 +43,13 @@ const SpendingChart = ({ transactions }) => {
             angle={-30}
             textAnchor="end"
             interval={0}
-            tick={{ fontSize: 11, fill: '#8a8494', fontFamily: 'DM Mono, monospace' }}
+            tick={{ fontSize: 11, fill: '#8a8494', fontFamily: 'Poppins, sans-serif' }}
             axisLine={{ stroke: '#252530' }}
             tickLine={false}
           />
           <YAxis
             tickFormatter={(v) => `$${v}`}
-            tick={{ fontSize: 11, fill: '#8a8494', fontFamily: 'DM Mono, monospace' }}
+            tick={{ fontSize: 11, fill: '#8a8494', fontFamily: 'Poppins, sans-serif' }}
             axisLine={false}
             tickLine={false}
             width={52}
