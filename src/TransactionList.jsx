@@ -9,12 +9,8 @@ const TransactionList = ({ transactions, onDelete }) => {
   const [pendingDeleteId, setPendingDeleteId] = useState(null);
 
   let filtered = transactions;
-  if (filterType !== "all") {
-    filtered = filtered.filter(t => t.type === filterType);
-  }
-  if (filterCategory !== "all") {
-    filtered = filtered.filter(t => t.category === filterCategory);
-  }
+  if (filterType !== "all") filtered = filtered.filter(t => t.type === filterType);
+  if (filterCategory !== "all") filtered = filtered.filter(t => t.category === filterCategory);
 
   const handleConfirmDelete = () => {
     onDelete(pendingDeleteId);
@@ -22,20 +18,22 @@ const TransactionList = ({ transactions, onDelete }) => {
   };
 
   return (
-    <div className="transactions">
-      <h2>Transactions</h2>
-      <div className="filters">
-        <select value={filterType} onChange={(e) => setFilterType(e.target.value)}>
-          <option value="all">All Types</option>
-          <option value="income">Income</option>
-          <option value="expense">Expense</option>
-        </select>
-        <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}>
-          <option value="all">All Categories</option>
-          {categories.map(cat => (
-            <option key={cat} value={cat}>{cat}</option>
-          ))}
-        </select>
+    <div className="panel transactions">
+      <div className="transactions-header">
+        <h2 className="section-title">Transactions</h2>
+        <div className="filter-group">
+          <select className="filter-select" value={filterType} onChange={(e) => setFilterType(e.target.value)}>
+            <option value="all">All Types</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+          <select className="filter-select" value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}>
+            <option value="all">All Categories</option>
+            {categories.map(cat => (
+              <option key={cat} value={cat}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <table>
@@ -44,21 +42,21 @@ const TransactionList = ({ transactions, onDelete }) => {
             <th>Date</th>
             <th>Description</th>
             <th>Category</th>
-            <th>Amount</th>
+            <th style={{ textAlign: 'right' }}>Amount</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           {filtered.map(t => (
             <tr key={t.id}>
-              <td>{t.date}</td>
-              <td>{t.description}</td>
-              <td>{t.category}</td>
-              <td className={t.type === "income" ? "income-amount" : "expense-amount"}>
-                {t.type === "income" ? "+" : "-"}${t.amount}
+              <td className="date-cell">{t.date}</td>
+              <td className="description-cell">{t.description}</td>
+              <td><span className="category-badge">{t.category}</span></td>
+              <td className={`amount-cell ${t.type === "income" ? "income-amount" : "expense-amount"}`}>
+                {t.type === "income" ? "+" : "−"}${t.amount.toLocaleString()}
               </td>
-              <td>
-                <button className="delete-btn" onClick={() => setPendingDeleteId(t.id)}>Delete</button>
+              <td className="action-cell">
+                <button className="delete-btn" onClick={() => setPendingDeleteId(t.id)}>Del</button>
               </td>
             </tr>
           ))}

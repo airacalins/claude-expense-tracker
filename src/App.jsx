@@ -5,7 +5,7 @@ import TransactionForm from './TransactionForm'
 import TransactionList from './TransactionList'
 import SpendingChart from './SpendingChart'
 
-function App() {
+const App = () => {
   const [transactions, setTransactions] = useState([
     { id: 1, description: "Salary", amount: 5000, type: "income", category: "salary", date: "2025-01-01" },
     { id: 2, description: "Rent", amount: 1200, type: "expense", category: "housing", date: "2025-01-02" },
@@ -25,10 +25,22 @@ function App() {
     setTransactions(transactions.filter(t => t.id !== id));
   };
 
+  const today = new Date().toLocaleDateString('en-US', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+
   return (
     <div className="app">
-      <h1>Finance Tracker</h1>
-      <p className="subtitle">Track your income and expenses</p>
+      <header className="app-header">
+        <div className="app-logo">
+          <div className="app-logo-mark">FT</div>
+          <div className="app-title-group">
+            <h1>Finance Tracker</h1>
+            <p className="subtitle">Personal ledger</p>
+          </div>
+        </div>
+        <div className="app-date">{today}</div>
+      </header>
 
       <Summary transactions={transactions} />
       <TransactionForm onAdd={handleAdd} />

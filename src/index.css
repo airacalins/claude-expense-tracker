@@ -1,11 +1,44 @@
-* {
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap');
+
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+:root {
+  --bg: #0a0a0c;
+  --surface: #0f0f12;
+  --card: #16161a;
+  --card-hover: #1c1c22;
+  --border: #252530;
+  --border-light: #1c1c26;
+  --accent: #c9a84c;
+  --accent-dim: rgba(201, 168, 76, 0.12);
+  --income: #52d68a;
+  --expense: #f0718a;
+  --text: #ddd8d0;
+  --text-secondary: #8a8494;
+  --text-dim: #3d3a45;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, sans-serif;
+  --font-mono: 'DM Mono', 'Courier New', monospace;
+  --radius: 3px;
+  --transition: 150ms ease;
+}
+
+html, body {
+  min-height: 100vh;
+  background-color: var(--bg);
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #ffffff;
-  color: #333;
+  font-family: var(--font-body);
+  color: var(--text);
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
 }
