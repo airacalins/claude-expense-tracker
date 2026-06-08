@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import ConfirmDialog from './ConfirmDialog'
-
-const categories = ["food", "housing", "utilities", "transport", "entertainment", "salary", "other"];
+import { CATEGORIES } from './constants'
 
 const TransactionList = ({ transactions, onDelete }) => {
   const [filterType, setFilterType] = useState("all");
@@ -29,7 +28,7 @@ const TransactionList = ({ transactions, onDelete }) => {
           </select>
           <select className="filter-select" value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}>
             <option value="all">All Categories</option>
-            {categories.map(cat => (
+            {CATEGORIES.map(cat => (
               <option key={cat} value={cat}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</option>
             ))}
           </select>
@@ -47,7 +46,13 @@ const TransactionList = ({ transactions, onDelete }) => {
           </tr>
         </thead>
         <tbody>
-          {filtered.map(t => (
+          {filtered.length === 0 ? (
+            <tr>
+              <td colSpan={5} style={{ textAlign: 'center', padding: '32px', color: 'var(--text-secondary)' }}>
+                No transactions match your filters.
+              </td>
+            </tr>
+          ) : filtered.map(t => (
             <tr key={t.id}>
               <td className="date-cell">{t.date}</td>
               <td className="description-cell">{t.description}</td>
@@ -56,7 +61,13 @@ const TransactionList = ({ transactions, onDelete }) => {
                 {t.type === "income" ? "+" : "−"}${t.amount.toLocaleString()}
               </td>
               <td className="action-cell">
-                <button className="delete-btn" onClick={() => setPendingDeleteId(t.id)}>Del</button>
+                <button
+                  className="delete-btn"
+                  onClick={() => setPendingDeleteId(t.id)}
+                  aria-label={`Delete transaction: ${t.description}`}
+                >
+                  Del
+                </button>
               </td>
             </tr>
           ))}

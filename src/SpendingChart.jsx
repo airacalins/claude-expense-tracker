@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer, CartesianGrid } from 'recharts';
 
 const COLORS = ['#c9a84c', '#f0718a', '#52d68a', '#9b8cd6', '#60adf0', '#f0a062', '#52c8c4', '#d68052'];
@@ -13,14 +14,14 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const SpendingChart = ({ transactions }) => {
-  const data = Object.entries(
+  const data = useMemo(() => Object.entries(
     transactions
       .filter(t => t.type === 'expense')
       .reduce((acc, t) => {
         acc[t.category] = (acc[t.category] || 0) + t.amount;
         return acc;
       }, {})
-  ).map(([name, value]) => ({ name, value }));
+  ).map(([name, value]) => ({ name, value })), [transactions]);
 
   if (data.length === 0) {
     return (
@@ -55,8 +56,8 @@ const SpendingChart = ({ transactions }) => {
           />
           <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
           <Bar dataKey="value" radius={[3, 3, 0, 0]}>
-            {data.map((_, index) => (
-              <Cell key={index} fill={COLORS[index % COLORS.length]} />
+            {data.map((entry, index) => (
+              <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
             ))}
           </Bar>
         </BarChart>
